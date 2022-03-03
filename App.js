@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, SafeAreaView, TextInput, Text, View, Image, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Counter from './Counter.js';
@@ -9,6 +9,8 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Login from './Login.js';
+import { Card, ListItem, Button, Icon } from 'react-native-elements';
+import {onChangephoneNumber, phoneNumber, onChangeOTP, OTP} from './Login.js'
 
 // import Icons from "./Icons";
 const Tab = createMaterialBottomTabNavigator();
@@ -59,16 +61,46 @@ export default function App() {
       </Tab.Navigator>
     </NavigationContainer>
   );
-
-
 }
+
 
   else {
-  return (<Login/>);
+  return (
+    // <SafeAreaView>
+    //   <TextInput
+    //     style={styles.input}
+    //     onChangeText={onChangephoneNumber}
+    //     value={phoneNumber}
+    //     placeholder="Enter Phone Number"
+    //     keyboardType="numeric"/>
+    //   <View>
+    //   <Button 
+    //   title="Send OTP"
+    //   onPress={() => fetch('https://dev.stedi.me/twofactorlogin/'+phoneNumber, {method: "POST"})}></Button>
+    //   </View> 
+    //   <TextInput
+    //     style={styles.input}
+    //     onChangeText={onChangeOTP}
+    //     value={OTP}
+    //     placeholder="Enter OTP"
+    //     keyboardType="numeric"/>
+    //   <View>
+    //   <Button
+    //   title="Login"
+    //   onPress={() => setUserLoggedIn(true)}></Button>
+    //   </View>
+    // </SafeAreaView>
+    <Login setUserLoggedIn={setUserLoggedIn}/>
+  )
+}
 }
 
-}
 
 const styles = StyleSheet.create({
-  
-});
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+});;
