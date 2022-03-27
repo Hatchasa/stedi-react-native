@@ -9,8 +9,6 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Login from './Login.js';
-import { Card, ListItem, Button, Icon } from 'react-native-elements';
-import {onChangephoneNumber, phoneNumber, onChangeOTP, OTP} from './Login.js'
 
 // import Icons from "./Icons";
 const Tab = createMaterialBottomTabNavigator();
@@ -18,7 +16,8 @@ const Tab = createMaterialBottomTabNavigator();
 export default function App() {
 
   const [userLoggedIn, setUserLoggedIn] = useState(false);
-
+  const [userEmail, setUserEmail] = useState("");
+  
   if(userLoggedIn){
 
   return (
@@ -30,9 +29,10 @@ export default function App() {
       >
         <Tab.Screen
           name='Home'
-          component={Home}
+          children = {()=> <Home userEmail={userEmail}/>}
           options={{
             tabBarLabel: 'Home',
+            
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name='home' color={color} size={26} />
             ),
@@ -54,7 +54,7 @@ export default function App() {
           options={{
             tabBarLabel: 'Settings',
             tabBarIcon: ({ color }) => (
-              <FontAwesome name='gear' color={color} size={26} />
+              <FontAwesome name='gear' color={color} size={26}/>
             ),
           }}
         />
@@ -66,31 +66,7 @@ export default function App() {
 
   else {
   return (
-    // <SafeAreaView>
-    //   <TextInput
-    //     style={styles.input}
-    //     onChangeText={onChangephoneNumber}
-    //     value={phoneNumber}
-    //     placeholder="Enter Phone Number"
-    //     keyboardType="numeric"/>
-    //   <View>
-    //   <Button 
-    //   title="Send OTP"
-    //   onPress={() => fetch('https://dev.stedi.me/twofactorlogin/'+phoneNumber, {method: "POST"})}></Button>
-    //   </View> 
-    //   <TextInput
-    //     style={styles.input}
-    //     onChangeText={onChangeOTP}
-    //     value={OTP}
-    //     placeholder="Enter OTP"
-    //     keyboardType="numeric"/>
-    //   <View>
-    //   <Button
-    //   title="Login"
-    //   onPress={() => setUserLoggedIn(true)}></Button>
-    //   </View>
-    // </SafeAreaView>
-    <Login setUserLoggedIn={setUserLoggedIn}/>
+    <Login setUserLoggedIn={setUserLoggedIn} setUserEmail={setUserEmail}/>
   )
 }
 }

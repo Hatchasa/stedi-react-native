@@ -1,10 +1,10 @@
 import { useLinkProps } from "@react-navigation/native";
 import React from "react";
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, Alert} from 'react-native';
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { Card, ListItem, Button, Icon } from 'react-native-elements';
 
-  
+
 export default function Login(props) {
   const [phoneNumber, onChangephoneNumber] = React.useState(null);
   const [OTP, onChangeOTP] = React.useState(null);
@@ -20,7 +20,7 @@ export default function Login(props) {
       <View>
       <Button 
       title="Send OTP"
-      onPress={() => fetch('https://dev.stedi.me/twofactorlogin/'+phoneNumber, {method: "POST"})}></Button>
+      onPress={() => fetch('https://dev.stedi.me/twofactorlogin/'+phoneNumber, {method: "POST"})}/>
       </View> 
       <TextInput
         style={styles.input}
@@ -31,12 +31,39 @@ export default function Login(props) {
       <View>
       <Button
       title="Login"
-      onPress={() => props.setUserLoggedIn(true)}></Button>
+      async onPress={() => fetch('https://dev.stedi.me/twofactorlogin', {
+        method: 'POST',
+        body: JSON.stringify({
+          phoneNumber: phoneNumber,
+          oneTimePassword: OTP}),
+      })
+      .then((response) => {
+      if(response.status==200) 
+      {const token = response.text()
+      props.setUserLoggedIn(true)
+    
+        return token
+      }
+      else{(Alert.alert("Unable to Login"))}
+      }) 
+      .then((token) => {fetch('https://dev.stedi.me/validate/'+token,{
+        method:'GET',
+        headers: {
+          Accept:"application/text",
+          "Content-Type":"application/text"
+        }}
+      )
+      .then((userEmail) => {
+        console.log()
+        props.setUserEmail(userEmail);
+      })
+    })
+    }>
+      </Button>
       </View>
     </SafeAreaView>
   )
 }
-
 
 const styles = StyleSheet.create({
   input: {

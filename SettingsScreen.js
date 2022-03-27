@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 
 export default function SettingsScreen() {
@@ -15,10 +15,10 @@ export default function SettingsScreen() {
     }
   
   })
-  return(
-    <View style={styles.container}>
-      <Text style={styles.message}>This is the settings page</Text>
-    </View>
-  )
 
+  return(
+      <View style={styles.container}>
+        <Text style={styles.message}>This is the Settings Screen</Text>
+      </View>
+  )
 }
