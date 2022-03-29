@@ -40,22 +40,17 @@ export default function Login(props) {
       .then((response) => {
       if(response.status==200) 
       {const token = response.text()
-      props.setUserLoggedIn(true)
-    
+        
         return token
       }
       else{(Alert.alert("Unable to Login"))}
-      }) 
-      .then((token) => {fetch('https://dev.stedi.me/validate/'+token,{
-        method:'GET',
-        headers: {
-          Accept:"application/text",
-          "Content-Type":"application/text"
-        }}
-      )
-      .then((userEmail) => {
-        console.log()
-        props.setUserEmail(userEmail);
+    }) 
+    .then((token) => {fetch('https://dev.stedi.me/validate/'+token)
+
+      .then((reponse) => {
+        reponse.text().then(function(email) 
+        {props.setUserEmail(email);
+         props.setUserLoggedIn(true)})
       })
     })
     }>
